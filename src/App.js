@@ -16,11 +16,11 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 //suc, error 핸들링 방식 최신
 const queryClient = new QueryClient({
   queryCache: new QueryCache({
-    onSuccess: () => {
-      console.log("success");
+    onSuccess: (data) => {
+      console.log("success", data);
     },
-    onError: () => {
-      console.log("error");
+    onError: (data) => {
+      console.log("error", data);
     },
   }),
 });
