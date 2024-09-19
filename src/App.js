@@ -8,11 +8,22 @@ import {
   useMutation,
   useQueryClient,
   QueryClient,
+  QueryCache,
   QueryClientProvider,
 } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
-const queryClient = new QueryClient();
+//suc, error 핸들링 방식 최신
+const queryClient = new QueryClient({
+  queryCache: new QueryCache({
+    onSuccess: () => {
+      console.log("success");
+    },
+    onError: () => {
+      console.log("error");
+    },
+  }),
+});
 
 function App() {
   return (
