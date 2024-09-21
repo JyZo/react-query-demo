@@ -1,14 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-const fetchSuperHeroes = () => {
-  return axios.get("http://localhost:4000/superheroes");
+const fetchSuperHero = ({ queryKey }) => {
+  const heroId = queryKey[1];
+  return axios.get(`http://localhost:4000/superheroes/${heroId}`);
 };
 
-export const useSuperHeroesData = () => {
+export const useSuperHeroData = (heroId) => {
+  console.log(heroId);
   return useQuery({
-    queryKey: ["super-heroes"],
-    queryFn: fetchSuperHeroes,
+    queryKey: ["super-hero", heroId],
+    queryFn: fetchSuperHero,
     // select: (data) => {
     //   const superHeroNames = data.data.map((hero) => hero.name);
     //   return superHeroNames;

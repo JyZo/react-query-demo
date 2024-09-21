@@ -3,6 +3,8 @@ import { Routes, Route, Link } from "react-router-dom";
 import { HomePage } from "./components/Home.page";
 import { RQSuperHeroesPage } from "./components/RQSuperHeroes.page";
 import { SuperHeroesPage } from "./components/SuperHeroes.page";
+import { RQSuperHeroPage } from "./components/RQSuperHero.page";
+
 import {
   useQuery,
   useMutation,
@@ -46,6 +48,10 @@ function App() {
         </div>
 
         <Routes>
+          <Route
+            path="/rq-super-heroes/:heroId"
+            element={<RQSuperHeroPage />}
+          ></Route>
           <Route path="/super-heroes" element={<SuperHeroesPage />}></Route>
           <Route
             path="/rq-super-heroes"
