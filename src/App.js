@@ -14,6 +14,8 @@ import {
   QueryClientProvider,
 } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { DynamicParallelPage } from "./components/DynamicParallel.page";
+import { ParallelQueriesPage } from "./components/ParallelQueries.page";
 
 //suc, error 핸들링 방식 최신
 const queryClient = new QueryClient({
@@ -48,6 +50,7 @@ function App() {
         </div>
 
         <Routes>
+          <Route path="/rq-parallel" element={<ParallelQueriesPage />}></Route>
           <Route
             path="/rq-super-heroes/:heroId"
             element={<RQSuperHeroPage />}
@@ -56,6 +59,10 @@ function App() {
           <Route
             path="/rq-super-heroes"
             element={<RQSuperHeroesPage />}
+          ></Route>
+          <Route
+            path="/rq-dynamic-parallel"
+            element={<DynamicParallelPage heroIds={[1, 3]} />}
           ></Route>
           <Route path="/" element={<HomePage />}></Route>
         </Routes>
