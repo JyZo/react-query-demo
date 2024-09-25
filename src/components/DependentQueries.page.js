@@ -1,8 +1,13 @@
-import { useQuery } from "react-query";
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
 import axios from "axios";
 
 const fetchUserByEmail = ({ queryKey }) => {
-  console.log(queryKey);
   const email = queryKey[1];
   return axios.get(`http://localhost:4000/users/${email}`);
 };
@@ -13,24 +18,18 @@ const fetchCoursesByChannelId = ({ queryKey }) => {
 };
 
 export const DependentQueriesPage = ({ email }) => {
-  console.log(email);
   const { data: user } = useQuery({
     queryKey: ["user", email],
-    queryFn: () => fetchUserByEmail(email),
+    queryFn: fetchUserByEmail,
   });
-  console.log("userfin");
 
   const channelId = user?.data?.channelId;
-  console.log(channelId);
 
-  const {
-    status,
-    fetchStatus,
-    data: courses,
-  } = useQuery({
+  const { data: courses } = useQuery({
     queryKey: ["courses", channelId],
     queryFn: fetchCoursesByChannelId,
     enabled: !!channelId,
   });
+
   return <div>DependentQueries</div>;
 };
