@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 
 const fetchSuperHero = ({ queryKey }) => {
@@ -7,10 +7,17 @@ const fetchSuperHero = ({ queryKey }) => {
 };
 
 export const useSuperHeroData = (heroId) => {
+  const queryClient = useQueryClient();
   console.log(heroId);
   return useQuery({
     queryKey: ["super-hero", heroId],
     queryFn: fetchSuperHero,
+    initialData: () => {
+      // Use a todo from the 'todos' query as the initial data for this todo query
+      return queryClient
+        .getQueryData(["super-hero"])
+        ?.find((d) => d.id === heroId);
+    },
     // select: (data) => {
     //   const superHeroNames = data.data.map((hero) => hero.name);
     //   return superHeroNames;
