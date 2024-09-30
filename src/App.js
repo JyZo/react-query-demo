@@ -17,6 +17,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { DynamicParallelPage } from "./components/DynamicParallel.page";
 import { ParallelQueriesPage } from "./components/ParallelQueries.page";
 import { DependentQueriesPage } from "./components/DependentQueries.page";
+import { PaginatedQueriesPage } from "./components/PaginatedQueriesPage.page";
 
 //suc, error 핸들링 방식 최신
 const queryClient = new QueryClient({
@@ -51,6 +52,10 @@ function App() {
         </div>
 
         <Routes>
+          <Route
+            path="/rq-paginated"
+            element={<PaginatedQueriesPage />}
+          ></Route>
           <Route
             path="/rq-dependent"
             element={<DependentQueriesPage email="vishwas@example.com" />}
