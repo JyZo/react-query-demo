@@ -18,6 +18,7 @@ import { DynamicParallelPage } from "./components/DynamicParallel.page";
 import { ParallelQueriesPage } from "./components/ParallelQueries.page";
 import { DependentQueriesPage } from "./components/DependentQueries.page";
 import { PaginatedQueriesPage } from "./components/PaginatedQueriesPage.page";
+import { InfiniteQueriesPage } from "./components/InfiniteQueries.page";
 
 //suc, error 핸들링 방식 최신
 const queryClient = new QueryClient({
@@ -52,6 +53,7 @@ function App() {
         </div>
 
         <Routes>
+          <Route path="/rq-infinite" element={<InfiniteQueriesPage />}></Route>
           <Route
             path="/rq-paginated"
             element={<PaginatedQueriesPage />}
