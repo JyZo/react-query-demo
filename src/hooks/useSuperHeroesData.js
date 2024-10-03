@@ -39,22 +39,39 @@ export const useAddSuperHeroData = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: addSuperHero,
-    onSuccess: (data, variables) => {
-      // queryClient.invalidateQueries({ queryKey: ["super-heroes"] });
-      // queryClient.setQueryData("super-heroes", (oldQueryData) => {
-      //   return {
-      //     ...oldQueryData,
-      //     data: [...oldQueryData.data, data.data],
-      //   };
-      // });
+    // onSuccess: (data, variables) => {
+    // queryClient.invalidateQueries({ queryKey: ["super-heroes"] });   //mutaion 으로 업데이트를 하고 재요청을 보내 데이터 갱신
+    // queryClient.setQueryData(["super-heroes"], (oldData) =>  //mutaion 으로 업데이트를 하고 재요청 대신 클라이언트사이드에서 캐시 업데이트를 해서 갱신
+    //   oldData                                                //네트워크 자원 절약 가능
+    //     ? {
+    //         ...oldData,
+    //         data: [...oldData.data, data.data],
+    //       }
+    //     : oldData
+    // );
+
+    // },
+    onMutate: async (newHero) => {
+      await queryClient.cancelQueries("super-heroes");
+      const previousHeroData = queryClient.getQueryData("super-heroes");
       queryClient.setQueryData(["super-heroes"], (oldData) =>
         oldData
           ? {
               ...oldData,
-              data: [...oldData.data, data.data],
+              data: [
+                ...oldData.data,
+                { id: oldData?.data?.length + 1, ...newHero },
+              ],
             }
           : oldData
       );
+      return { previousHeroData };
+    },
+    onError: (_err, _newTodo, context) => {
+      queryClient.setQueryData("super-heroes", context.previousHeroData);
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["super-heroes"] });
     },
   });
 };
