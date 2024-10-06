@@ -40,6 +40,7 @@ export const RQSuperHeroesPage = () => {
   if (isError) {
     return <span>Error: {error.message}</span>;
   }
+  console.log(data);
 
   return (
     <>
